@@ -25,8 +25,12 @@ class TestType extends AbstractType {
                                 ->add('orderBy', 'b.name ASC');
                     })
                 )
-                ->add('width', TextType::class)
-                ->add('height', TextType::class)
+                ->add('width', TextType::class, array(
+                    'required' => false
+                ))
+                ->add('height', TextType::class, array(
+                    'required' => false
+                ))
                 ->add('page', TextType::class)
                 ->add('actions', TextType::class, array(
                     'required' => false

@@ -66,7 +66,7 @@
         <div class="form-group">
             {{ form_label(form.customObject, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
             <div class="col-sm-10">
-                {{ form_widget(form.customObject, {'attr': {'class': 'form-control', 'placeholder': 'Not required'}}) }}
+                {{ form_widget(form.customObject, {'attr': {'class': 'form-control'}}) }}
                 <span class="help-block">{{ form_errors(form.customObject) }}</span>
             </div>
         </div>
@@ -87,7 +87,6 @@
                         <td>
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default" onclick="insertAtCaret('$status');"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Result status</button>
-                                <button type="button" class="btn btn-default" onclick="insertAtCaret('$step');"><span class="glyphicon glyphicon-indent-right" aria-hidden="true"></span> Error at step</button>
                                 <button type="button" class="btn btn-default" onclick="insertAtCaret('$percentage');"><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span> Percentage</button>
                                 <button type="button" class="btn btn-default" onclick="insertAtCaret('$date');"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Test date</button>
                                 <button type="button" class="btn btn-default" onclick="insertAtCaret('$time');"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Run time</button>

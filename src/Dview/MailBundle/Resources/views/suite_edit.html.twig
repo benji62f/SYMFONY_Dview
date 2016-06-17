@@ -8,6 +8,12 @@
 {% endblock %}
 
 {% block body %}
+    {% if ext == true %}
+        <div class="alert alert-info">
+            Vous utilisez actuellement une configuration externe (issue du projet), la configuration définie pour cette suite sera donc ignorée au profit de cette dernière.
+        </div>
+    {% endif %}
+    
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1">
             <div class="box box-solid">
@@ -28,10 +34,10 @@
                             </div>
                             <div id="collapseOne" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
                                 <div class="box-body">
-                                    Si vous faites ce choix, la configuration définie pour ce test sera ignorée, laissant place à celle du projet le contenant.
+                                    Si vous faites ce choix, la configuration définie pour cette suite sera ignorée, laissant place à celle du projet le contenant.
                                     <div class="col-md-6 col-md-offset-3">
                                         <br>
-                                        <button onclick="window.location.href = '{{ path('dview_suite_mail', { 'pid': pid, 'sid': sid, 'ext':true }) }}'" type="button" class="btn btn-block btn-success btn-lg">Utiliser</button>
+                                        <button onclick="window.location.href = '{{ path('dview_suite_mail', { 'pid': pid, 'sid': sid, 'ext': true }) }}'" type="button" class="btn btn-block btn-success btn-lg">Utiliser</button>
                                     </div>
                                 </div>
                             </div>

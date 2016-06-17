@@ -75,6 +75,9 @@ class ProjectController extends Controller {
 
             $em->persist($project);
             $em->flush();
+            
+            $project->getMailConfig()->addReceiver($project->getClient()); // set mails receiver (project's client by default)
+            $em->flush();
 
             return $this->redirect($this->generateUrl('dview_project_listing'));
         }
@@ -143,6 +146,9 @@ class ProjectController extends Controller {
             $suite->setMailConfig(new MailConfig());
 
             $em->persist($suite);
+            $em->flush();
+            
+            $suite->getMailConfig()->addReceiver($project->getClient());
             $em->flush();
 
             return $this->redirect($this->generateUrl('dview_suite_listing', array('pid' => $pid)));

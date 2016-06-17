@@ -8,6 +8,12 @@
 {% endblock %}
 
 {% block body %}
+    {% if ext == true %}
+        <div class="alert alert-info">
+            Vous utilisez actuellement une configuration externe (issue de la suite ou du projet), la configuration définie pour ce test sera donc ignorée au profit de cette dernière.
+        </div>
+    {% endif %}
+
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1">
             <div class="box box-solid">
@@ -81,30 +87,30 @@
     <script src="{{ asset('vendor/summernote-0.8.1/dist/summernote.js') }}"></script>
     <script src="{{ asset('vendor/chosen_v1.5.1/chosen.jquery.min.js') }}"></script>
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#summernote').summernote({
-                callbacks: {
-                    onChange: function (contents, $editable) {
-                        console.log('onChange:', contents, $editable);
-                        document.getElementById("mail_additionalContent").value = contents;
-                    }
-                },
-                height: 300,
-                dialogsInBody: true
-            });
-        });
+                                            $(document).ready(function () {
+                                                $('#summernote').summernote({
+                                                    callbacks: {
+                                                        onChange: function (contents, $editable) {
+                                                            console.log('onChange:', contents, $editable);
+                                                            document.getElementById("mail_additionalContent").value = contents;
+                                                        }
+                                                    },
+                                                    height: 300,
+                                                    dialogsInBody: true
+                                                });
+                                            });
 
-        function insertAtCaret(text) {
-            $('#summernote').summernote('editor.saveRange');
+                                            function insertAtCaret(text) {
+                                                $('#summernote').summernote('editor.saveRange');
 
-            // Editor loses selected range (e.g after blur)
+                                                // Editor loses selected range (e.g after blur)
 
-            $('#summernote').summernote('editor.restoreRange');
-            $('#summernote').summernote('editor.focus');
-            $('#summernote').summernote('editor.insertText', ' ' + text + ' ');
-        }
+                                                $('#summernote').summernote('editor.restoreRange');
+                                                $('#summernote').summernote('editor.focus');
+                                                $('#summernote').summernote('editor.insertText', ' ' + text + ' ');
+                                            }
 
-        $('#mail_receivers').chosen({width: '100%'});
-        $(".checkbox").bootstrapSwitch();
+                                            $('#mail_receivers').chosen({width: '100%'});
+                                            $(".checkbox").bootstrapSwitch();
     </script>
 {% endblock %}
