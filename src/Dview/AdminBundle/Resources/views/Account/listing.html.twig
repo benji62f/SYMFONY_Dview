@@ -1,0 +1,48 @@
+{% extends 'DviewAdminBundle::layout.html.twig' %}
+{% block dviewadmin_body %}
+    {% if app.request.get('error') %}
+        <div class="alert alert-danger" role="alert">
+            <strong>Oh snap !</strong> L'utilisateur n'a pas pu être supprimé car il a encore des projets.
+        </div>
+    {% endif %}
+     
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-striped">
+                        <thead>
+                            <th>Nom</th>
+                            <th>Courriel</th>
+                            <th>Rôle</th>
+                            <th class="hidden-xs">Date de création</th>
+                            <th class="hidden-xs">Dernière connexion</th>
+                            <th></th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            {% for user in listUsers %}
+                                <tr>
+                                    <td>{{ user.username }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>
+                                        {% for role in user.roles %}
+                                            {% if role != 'ROLE_USER' %}
+                                                {{ role }}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                    <td class="hidden-xs">{{ user.creationDate|date('d/m/Y') }}</td>
+                                    <td class="hidden-xs">{{ user.lastLogin|date('d/m/Y') }}</td>
+                                    <td><a href="{{ path('dview_admin_account_edit', {'uid' : user.id} ) }}"><span class="glyphicon glyphicon-cog"></span></a></td>
+                                    <td><a href="{{ path('dview_admin_account_delete', {'uid' : user.id} ) }}"><span class="glyphicon glyphicon-remove" style="color:red"></span></a></td>
+                                </tr>
+                            {% endfor %}
+                            <tr><td colspan="7"><a href="{{ path('fos_user_registration_register') }}"><b><span class="glyphicon glyphicon-plus"></span> Ajouter un utilisateur</b></a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

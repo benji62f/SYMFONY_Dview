@@ -1,0 +1,194 @@
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:rgb(42, 55, 78)">
+    <tbody>
+        <tr>
+            <td align="center" bgcolor="#2A374E">
+                <table  cellpadding="0" cellspacing="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td class="w640"  width="640" height="10"></td>
+                        </tr>
+                        <tr>
+                            <td align="center" class="w640"  width="640" height="20"> <a style="color:#ffffff; font-size:12px;" href="{{ path('dview_test_view', { 'pid':project.id, 'sid':suite.id, 'tid':test.id }) }}"><span style="color:#ffffff; font-size:12px;">Voir le test en ligne</span></a> </td>
+                        </tr>
+                        <tr>
+                            <td class="w640"  width="640" height="10"></td>
+                        </tr>
+
+                        <!-- entete -->
+                        <tr class="pagetoplogo">
+                            <td class="w640"  width="640">
+                                <table  class="w640"  width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#F2F0F0">
+                                    <tbody>
+                                        <tr>
+                                            <td class="w30"  width="30"></td>
+                                            <td  class="w580"  width="580" valign="middle" align="left">
+                                                <div class="pagetoplogo-content">
+                                                    <h1 class="w580" style="text-decoration: none; display: block; color:#476688; font-size:30px;">Dview</h1>
+                                                </div>
+                                            </td> 
+                                            <td class="w30"  width="30"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <!-- separateur horizontal -->
+                        <tr>
+                            <td  class="w640"  width="640" height="1" bgcolor="#d7d6d6"></td>
+                        </tr>
+
+                        <!-- contenu -->
+                        <tr class="content">
+                            <td class="w640" class="w640"  width="640" bgcolor="#ffffff">
+                                <table class="w640"  width="640" cellpadding="0" cellspacing="0" border="0">
+                                    <tbody>
+                                        <tr>
+                                            <td  class="w30"  width="30"></td>
+                                            <td  class="w580"  width="580">
+
+                                                {% if additionalContent is not null %}
+                                                    <!-- une zone de contenu -->
+                                                    <table class="w580"  width="580" cellpadding="0" cellspacing="0" border="0">
+                                                        <tbody>                                                            
+                                                            <tr>
+                                                                <td class="w580"  width="580">
+                                                                    <h2 style="color:#0E7693; font-size:22px; padding-top:12px;">
+                                                                        Message  </h2>
+
+                                                                    <div align="left" class="article-content">
+                                                                        <p>
+                                                                            {{ additionalContent|raw }}
+                                                                        </p>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="w580"  width="580" height="1" bgcolor="#c7c5c5"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- fin zone -->
+                                                {% endif %}
+
+                                                {% if withStatus %}
+                                                    <!-- une zone de contenu -->
+                                                    <table class="w580"  width="580" cellpadding="0" cellspacing="0" border="0">
+                                                        <tbody>                                                            
+                                                            <tr>
+                                                                <td class="w580"  width="580">
+                                                                    <h2 style="color:#0E7693; font-size:22px; padding-top:12px;">
+                                                                        Résultat de votre test  </h2>
+
+                                                                    <div align="left" class="article-content">
+                                                                        <p> Le test <b>{{ test.name }}</b> a abouti avec le statut
+                                                                            {% if result.status == 2 %}
+                                                                                <b style="color:green">OK</b>
+                                                                            {% elseif result.status == 3 %}
+                                                                                <b style="color:red">KO</b>
+                                                                            {% elseif result.status == 4 %}
+                                                                                <b style="color:blue">N/A</b>
+                                                                            {% else %}
+                                                                                <b>{{ result.status }}</b>
+                                                                            {% endif %}
+                                                                            {% if result.error.step is defined %}(échec à l'étape <code style="color:red">{{ result.error.step }}</code>){% endif %}.
+                                                                        </p>
+                                                                        <p>
+                                                                            Taux de différence relevé : <b>{{ result.misMatchPercentage }} %</b><br>
+                                                                            Test exécuté le {{ result.initDate|date('d/m/Y H:i:s') }}
+                                                                        </p>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="w580"  width="580" height="1" bgcolor="#c7c5c5"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- fin zone -->        
+                                                {% endif %}
+
+                                                {% if withInfo %}
+                                                    <!-- une zone de contenu -->
+                                                    <table class="w580"  width="580" cellpadding="0" cellspacing="0" border="0">
+                                                        <tbody>                                                            
+                                                            <tr>
+                                                                <td class="w580"  width="580">
+                                                                    <h2 style="color:#0E7693; font-size:22px; padding-top:12px;">
+                                                                        Informations sur votre test  </h2>
+
+                                                                    <div align="left" class="article-content">
+                                                                        <p>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td>Temps d'exécution&emsp;</td><td>{{ result.runtime }} ms</td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Navigateur utilisé pour la prise de capture&emsp;</td><td>{{ result.browser.name }} <i>version {{ result.browser.version }}</i></td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td>Système d'exploitation&emsp;</td><td>{{ result.browser.platform }}</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        </p>
+                                                                        <p>
+                                                                            Localisation sur Dview : {{ project.name }}/{{ suite.name }}/{{ test.name }}
+                                                                        </p>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="w580"  width="580" height="1" bgcolor="#c7c5c5"></td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- fin zone -->
+                                                {% endif %}
+
+                                            </td>
+                                            <td class="w30" class="w30"  width="30"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+
+                        <!--  separateur horizontal de 15px de  haut-->
+                        <tr>
+                            <td class="w640"  width="640" height="15" bgcolor="#ffffff"></td>
+                        </tr>
+
+                        <!-- pied de page -->
+                        <tr class="pagebottom">
+                            <td class="w640"  width="640">
+                                <table class="w640"  width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#c7c7c7">
+                                    <tbody>
+                                        <tr>
+                                            <td colspan="5" height="10"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="w30"  width="30"></td>
+                                            <td class="w580"  width="580" valign="top">
+                                                <p align="right" class="pagebottom-content-left" style="color:#255D5C;">
+                                                    <strong>Copyright &copy; {{ 'now'|date('Y') }} <a href="http://www.atecna.fr">Atecna</a>.</strong> Tous droits réservés.
+                                                </p>
+                                            </td>
+
+                                            <td class="w30"  width="30"></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5" height="10"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w640"  width="640" height="60"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>

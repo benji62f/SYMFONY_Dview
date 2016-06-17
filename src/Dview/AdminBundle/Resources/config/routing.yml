@@ -1,0 +1,43 @@
+dview_admin_homepage:
+    path:     /
+    defaults: { _controller: DviewAdminBundle:Admin:index }
+
+dview_admin_account_listing:
+    path:     /accounts
+    defaults: { _controller: DviewAdminBundle:Account:listing }
+
+dview_admin_account_edit:
+    path:     /accounts/{uid}
+    requirements:
+        uid: \d+
+    defaults: {_controller: DviewAdminBundle:Account:edit }
+    
+dview_admin_account_delete:
+    path:     /accounts/{uid}/delete
+    requirements:
+        uid: \d+
+    defaults: {_controller: DviewAdminBundle:Account:delete }
+    
+dview_admin_cron_listing:
+    path:     /cron
+    defaults: {_controller: DviewAdminBundle:Cron:listing }
+    
+dview_admin_cron_add:
+    path:     /cron/add
+    defaults: {_controller: DviewAdminBundle:Cron:add }
+    
+dview_admin_cron_delete:
+    path:     /cron/{cid}/delete
+    defaults: {_controller: DviewAdminBundle:Cron:delete }
+    
+dview_admin_browser_listing:
+    path:     /browsers
+    defaults: {_controller: DviewAdminBundle:Browser:listing }
+    
+dview_admin_browser_add:
+    path:     /browsers/add
+    defaults: {_controller: DviewAdminBundle:Browser:add }
+    
+dview_admin_browser_delete:
+    path:     /browsers/{bid}/delete
+    defaults: {_controller: DviewAdminBundle:Browser:delete }

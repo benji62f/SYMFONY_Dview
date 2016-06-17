@@ -1,0 +1,107 @@
+{% extends "DviewProjectBundle::layout.html.twig" %}
+{% block dviewproject_body %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Ajouter un test</h3>
+                </div>
+                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                {{ form_errors(form) }}
+                <div class="box-body">
+                    <div class="form-group">
+                        {{ form_label(form.name, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                            <span class="help-block">{{ form_errors(form.name) }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.page, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.page, {'attr': {'class': 'form-control', 'placeholder': 'www.atecna.fr'}}) }}
+                            <span class="help-block">{{ form_errors(form.page) }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.browser, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.browser, {'attr': {'class': 'form-control'}}) }}
+                            <span class="help-block">{{ form_errors(form.browser) }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.width, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.width, {'attr': {'class': 'form-control', 'placeholder': '1920'}}) }}
+                            <span class="help-block">{{ form_errors(form.width) }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.height, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.height, {'attr': {'class': 'form-control', 'placeholder': '1080'}}) }}
+                            <span class="help-block">{{ form_errors(form.height) }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.schedule, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.schedule, {'attr': {'class': 'form-control'}}) }}
+                            <span class="help-block">{{ form_errors(form.schedule) }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.threshold, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.threshold, {'attr': {'class': 'form-control', 'placeholder': '0.01'}}) }}
+                            <span class="help-block">{{ form_errors(form.threshold) }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.zone, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Type
+                                        <span class="fa fa-caret-down"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a onclick="btnTypeAction('xpath')">xpath</a></li>
+                                        <li><a onclick="btnTypeAction('css')">css</a></li>
+                                        <li><a onclick="btnTypeAction('id')">id</a></li>
+                                        <li><a onclick="btnTypeAction('class')">class</a></li>
+                                        <li><a onclick="btnTypeAction('name')">name</a></li>
+                                    </ul>
+                                </div>
+                                <!-- /btn-group -->
+                                {{ form_widget(form.zone, {'attr': {'class': 'form-control', 'placeholder': "Sélectionner un type, puis tapper la cible" }}) }}
+                            </div>
+                            <span class="help-block">Si aucune zone n'est définie, vous pourrez en sélectionner une manuellement via l'outil graphique.</span>
+                            <span class="help-block">{{ form_errors(form.zone) }}</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.actions, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.actions, {'attr': {'class': 'form-control', 'disabled':'' }}) }}
+                            <span class="help-block">Bientôt disponible.</span>
+                            <span class="help-block">{{ form_errors(form.actions) }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <a href="{{ path('dview_test_listing', {'pid' : pid, 'sid' : sid}) }}" class="btn btn-default">Retour</a>
+                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-info pull-right'}}) }}
+                </div>
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+    <script type='text/javascript'>
+        function btnTypeAction(string) {
+            document.getElementById('test_zone').value = (string + '=');
+        }
+    </script>
+{% endblock %}

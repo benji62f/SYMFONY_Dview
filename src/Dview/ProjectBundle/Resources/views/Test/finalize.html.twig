@@ -1,0 +1,69 @@
+{% extends "DviewProjectBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('vendor/cropperjs/dist/cropper.css') }}" rel="stylesheet">
+{% endblock %}
+
+{%- block number_widget -%}
+{%- set type = type|default('number') -%}
+{{ block('form_widget_simple') }}
+{%- endblock number_widget -%}
+
+{% block dviewproject_body %}
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Zone de capture</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                {{ form_errors(form) }}
+                <div class="box-body">
+                    <div>
+                        <img id="image" alt="Capture" src="{{ image }}" width="100%"/>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <input type="button" class="btn btn-default" value="Réinitialiser" onClick="javascript:cropper.reset()">
+                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-info pull-right'}}) }}
+                </div>
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('vendor/cropperjs/dist/cropper.js') }}"></script>
+    <script type="text/javascript">
+        var image = document.getElementById('image');
+        var cropper = new Cropper(image, {
+            autoCropArea: 1,
+            movable: false,
+            zoomable: false,
+            rotatable: false,
+            scalable: false,
+            checkCrossOrigin: false,
+            crop: function (e) {
+                console.log(e.detail.x);
+                document.getElementById("test_finalize_x").value = e.detail.x;
+                console.log(e.detail.y);
+                document.getElementById("test_finalize_y").value = e.detail.y;
+                console.log(e.detail.width);
+                document.getElementById("test_finalize_width").value = e.detail.width;
+                console.log(e.detail.height);
+                document.getElementById("test_finalize_height").value = e.detail.height;
+                console.log(e.detail.rotate);
+                console.log(e.detail.scaleX);
+                console.log(e.detail.scaleY);
+            }
+        });
+    </script>
+{% endblock %}

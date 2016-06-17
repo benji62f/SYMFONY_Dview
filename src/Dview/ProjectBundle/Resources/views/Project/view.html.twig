@@ -1,0 +1,17 @@
+{% extends "DviewProjectBundle::layout.html.twig" %}
+{% block section %}
+    Projet
+{% endblock %}
+
+{% block dviewproject_body %}
+    <div class="box">
+        <h1 class="box-header">{{ project.name }}</h1>
+        <p class="box-body">{{ project.description }}</p>
+        <p class="box-footer">
+            <a class="btn btn-primary btn-lg" href="{{ path('dview_suite_listing', {'pid' : project.id }) }}" role="button">Voir les suites</a>
+            {% if is_granted('ROLE_ADMIN') %}
+                <a class="btn btn-danger btn-lg" href="{{ path('dview_project_delete', {'pid' : project.id}) }}" role="button">Supprimer le projet</a>
+            {% endif %}
+        </p>
+    </div>
+{% endblock %}

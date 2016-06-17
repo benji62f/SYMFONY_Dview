@@ -1,0 +1,29 @@
+{% extends "DviewProjectBundle::layout.html.twig" %}
+{% block dviewproject_body %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Ajouter une suite</h3>
+                </div>
+                {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+                {{ form_errors(form) }}
+                <div class="box-body">
+                    <div class="form-group">
+                        {{ form_label(form.name, "Nom de la suite", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                        <div class="col-sm-10">
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                            <span class="help-block">{{ form_errors(form.name) }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <a href="{{ path('dview_suite_listing', {'pid' : pid}) }}" class="btn btn-default">Retour</a>
+                    {{ form_widget(form.save, {'attr': {'class': 'btn btn-info pull-right'}}) }}
+                </div>
+                {{ form_rest(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "DviewProjectBundle::layout.html.twig" %}
+{% block section %}
+    Suites
+{% endblock %}
+{% block dviewproject_body %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-striped">
+                        <thead>
+                            <th>Nom</th>
+                            <th>Date de création</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            {% for suite in listSuites %}
+                                <tr>
+                                    <td><a href="{{ path('dview_test_listing', {'pid' : pid,'sid': suite.id}) }}">{{ suite.name }}</a></td>
+                                    <td>{{ suite.date|date('d/m/Y') }}</td>
+                                    <td><a href="{{ path('dview_suite_view', {'pid' : pid,'sid': suite.id}) }}"><span class="glyphicon glyphicon-cog"></span></a></td>
+                                </tr>
+                            {% else %}
+                                <tr><td colspan="3">Il n'y a aucune suite pour ce projet.</td></tr>
+                            {% endfor %}
+                            {% if is_granted('ROLE_MANAGER') %}
+                                <tr><td colspan="3"><a href="{{ path('dview_suite_add', {'pid' : pid}) }}"><b><span class="glyphicon glyphicon-plus"></span> Ajouter une suite</b></a></td></tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

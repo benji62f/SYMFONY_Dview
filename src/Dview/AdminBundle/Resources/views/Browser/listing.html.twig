@@ -1,0 +1,30 @@
+{% extends 'DviewAdminBundle::layout.html.twig' %}
+{% block dviewadmin_body %}     
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-striped">
+                        <thead>
+                            <th>Nom</th>
+                            <th>Version</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            {% for browser in listBrowsers %}
+                                <tr>
+                                    <td>{{ browser.name }}</td>
+                                    <td>{{ browser.version }}</td>
+                                    <td><a href="{{ path('dview_admin_browser_delete', {'bid' : browser.id} ) }}"><span class="glyphicon glyphicon-remove" style="color:red"></span></a></td>
+                                </tr>
+                            {% else %}
+                                <tr><td colspan="3">Aucun élément.</td></tr>
+                            {% endfor %}
+                            <tr><td colspan="3"><a href="{{ path('dview_admin_browser_add') }}"><b><span class="glyphicon glyphicon-plus"></span> Ajouter un élément</b></a></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

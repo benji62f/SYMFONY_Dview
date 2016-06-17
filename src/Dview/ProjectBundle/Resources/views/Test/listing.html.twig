@@ -1,0 +1,34 @@
+{% extends "DviewProjectBundle::layout.html.twig" %}
+{% block section %}
+    Tests
+{% endblock %}
+{% block dviewproject_body %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-striped">
+                        <thead>
+                            <th>Nom</th>
+                            <th>Date de création</th>
+                        </thead>
+                        <tbody>
+                            {% for test in listTests %}
+                                <tr>
+                                    <td><a href="{{ path('dview_test_view', {'pid' : pid, 'sid': sid, 'tid' : test.id}) }}">{{ test.name }}</a></td>
+                                    <td>{{ test.date|date('d/m/Y') }}</td>
+                                </tr>
+                            {% else %}
+                                <tr><td colspan="2">Il n'y a aucun test pour cette suite.</td></tr>
+                            {% endfor %}
+                            {% if is_granted('ROLE_MANAGER') %}
+                                <tr><td colspan="2"><a href="{{ path('dview_test_add', {'pid' : pid, 'sid': sid}) }}"><b><span class="glyphicon glyphicon-plus"></span> Ajouter un test</b></a></td></tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,94 @@
+{% extends "::base.html.twig" %}
+{% block section %}
+    Tableau de bord
+{% endblock %}
+{% block body %}
+    <div class="row">
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="col-lg-3 col-xs-6">
+        {% else %}
+            <div class="col-lg-4 col-xs-6">
+        {% endif %}
+            <!-- small box -->
+            <div class="small-box bg-yellow">
+                <div class="inner">
+                    <h3>{{ nbProjects }}</h3>
+                    <p>Projets</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-folder"></i>
+                </div>
+                <a href="{{ path('dview_project_listing') }}" class="small-box-footer">Plus d'infos <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="col-lg-3 col-xs-6">
+        {% else %}
+            <div class="col-lg-4 col-xs-6">
+        {% endif %}
+            <!-- small box -->
+            <div class="small-box bg-red">
+                <div class="inner">
+                    <h3>{{ nbSuites }}</h3>
+                    <p>Suites</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-navicon-round"></i>
+                </div>
+                <a href="{{ path('dview_project_listing') }}" class="small-box-footer">Plus d'infos <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="col-lg-3 col-xs-6">
+        {% else %}
+            <div class="col-lg-4 col-xs-6 col-lg-offset-0 col-xs-offset-3">
+        {% endif %}
+            <!-- small box -->
+            <div class="small-box bg-green">
+                <div class="inner">
+                    <h3>{{ nbTests }}</h3>
+                    <p>Tests</p>
+                </div>
+                <div class="icon">
+                    <i class="ion ion-checkmark-round"></i>
+                </div>
+                <a href="{{ path('dview_project_listing') }}" class="small-box-footer">Plus d'infos <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>{{ nbUsers }}</h3>
+                        <p>Utilisateurs</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="{{ path('dview_admin_account_listing') }}" class="small-box-footer">Plus d'infos <i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-striped">
+                        <thead>
+                        <th>Date</th>
+                        <th>Projet</th>
+                        <th>Suite</th>
+                        <th>Test</th>
+                        <th>Statut</th>
+                        </thead>
+                        <tbody>
+                            <tr><td colspan="5">Aucun historique enregistré pour l'instant.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

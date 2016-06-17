@@ -1,0 +1,338 @@
+{% extends "DviewProjectBundle::layout.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('vendor/lightbox2/dist/css/lightbox.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block dviewproject_body %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                    <i class="fa fa-text-width"></i>
+                    <h3 class="box-title">Description</h3>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <dl class="dl-horizontal">
+                        <dt>Page</dt>
+                        <dd><a href='{{ test.page }}' target="_blank">{{ test.page }}</a></dd>
+                        <dt>Navigateur</dt>
+                        <dd>{{ test.browser.name }} <i class="text-muted">version {{ test.browser.version }}</i></dd>
+                        <dt>Taille d'écran utilisée</dt>
+                        <dd>{{ test.browser.width }}x{{ test.browser.height }}</dd>
+                        <dt>Zone de capture</dt>
+                        <dd>{{ test.comparison.zone }}</dd>
+                        <dt>Tolérance</dt>
+                        <dd>{{ test.comparison.threshold }} %</dd>
+                        <dt>Cron</dt>
+                        <dd>{{ test.cron }}<dd>
+                    </dl>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+
+
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Actions</h3>
+                </div>
+                <div class="box-body">
+                    <a class="btn btn-app" href="{{ path('dview_test_view', {'pid' : pid, 'sid' : sid, 'tid' : tid, 'page': page}) }}" onclick="waitingDialog.show()">
+                        <i class="fa fa-repeat"></i> Rafraîchir
+                    </a>
+                    {% if is_granted('ROLE_MANAGER') %}
+                        <a class="btn btn-app" href="{{ path('dview_test_run', {'pid' : pid, 'sid' : sid, 'tid' : tid}) }}" onclick="waitingDialog.show()">
+                            <i class="fa fa-play"></i> Exécuter
+                        </a>
+                        <a class="btn btn-app">
+                            <i class="fa fa-edit"></i> Editer
+                        </a>
+                        <a class="btn btn-app" href="{{ path('dview_test_mail', {'pid' : pid, 'sid' : sid, 'tid' : tid}) }}">
+                            <i class="fa fa-envelope"></i> Courriels
+                        </a>
+                        <a class="btn btn-app" href="{{ path('dview_test_delete', {'pid' : pid, 'sid' : sid, 'tid' : tid}) }}" onclick="waitingDialog.show()">
+                            <i class="fa fa-remove"></i> Supprimer
+                        </a>
+                    {% endif %}
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div><!-- ./col -->
+    </div><!-- /.row -->
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Bilan</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <p class="text-center">
+                                <strong>Image de référence</strong>
+                            </p>
+                            <div class="chart">
+                                <center>
+                                    <a href="{{ image }}" data-lightbox="image"><img alt="Capture" src="{{ image }}" style='border:1px solid #000000; max-width:100%; max-height:50vh;'/><br></a>
+                                </center>
+                            </div><!-- /.chart-responsive -->
+                        </div><!-- /.col -->
+                        <div class="col-md-4">
+                            <p class="text-center">
+                                <strong>Statistiques</strong>
+                            </p>
+                            {% if stats is not null %}
+                                <div class="progress-group">
+                                    <span class="progress-text">Succès</span>
+                                    <span class="progress-number"><b>{{ test.stats.passed }}</b>/{{ test.stats.executions }}</span>
+                                    <div class="progress sm">
+                                        <div class="progress-bar progress-bar-green" style="width: {{ stats.passed }}%"></div>
+                                    </div>
+                                </div><!-- /.progress-group -->
+                                <div class="progress-group">
+                                    <span class="progress-text">Echecs</span>
+                                    <span class="progress-number"><b>{{ test.stats.failed }}</b>/{{ test.stats.executions }}</span>
+                                    <div class="progress sm">
+                                        <div class="progress-bar progress-bar-red" style="width: {{ stats.failed }}%"></div>
+                                    </div>
+                                </div><!-- /.progress-group -->
+                                <div class="progress-group">
+                                    <span class="progress-text">N/A</span>
+                                    <span class="progress-number"><b>{{ test.stats.error }}</b>/{{ test.stats.executions }}</span>
+                                    <div class="progress sm">
+                                        <div class="progress-bar progress-bar-primary" style="width: {{ stats.error }}%"></div>
+                                    </div>
+                                </div><!-- /.progress-group -->
+                            {% else %}
+                                <div class="progress-group">
+                                    <span class="progress-text">{#Le test n'a jamais été exécuté #}STATS NON DISPONIBLES</span>
+                                    <span class="progress-number"><b>50</b>/100</span>
+                                    <div class="progress sm">
+                                        <div class="progress-bar progress-bar-aqua" style="width: 50%"></div>
+                                    </div>
+                                </div><!-- /.progress-group -->
+                            {% endif %}
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- ./box-body -->
+                <div class="box-footer">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="description-block">
+                                <h5 class="description-header"><a href='{{ image }}' target="_blank">Afficher l'image en taille réelle</a></h5>
+                            </div><!-- /.description-block -->
+                        </div>
+                    </div><!-- /.row -->
+                </div><!-- /.box-footer -->
+            </div><!-- /.box -->
+        </div><!-- /.col -->
+    </div><!-- /.row -->
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Exécutions</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <thead>
+                        <th>Pourcentage de différence</th>
+                        <th>Date d'exécution</th>
+                        <th>Temps d'exécution</th>
+                        <th>Statut</th>
+                        <th>Commentaire</th>
+                        <th></th>
+                        </thead>
+                        <tbody>
+                            {% for result in results %}
+                                <tr>
+                                    <td>{{ result.misMatchPercentage }} %</td>
+                                    <td>{{ result.initDate|date('d/m/Y H:i:s') }}</td>
+                                    <td>{{ result.runtime }} ms</td>
+                                    <td>
+                                        {% if result.status == 2 %}
+                                            <span class="label label-success">OK</span>
+                                        {% elseif result.status == 3 %}
+                                            <span class="label label-danger">KO</span>
+                                        {% elseif result.status == 4 %}
+                                            <span class="label label-warning">N/A</span>
+                                        {% else %}
+                                            <span class="label label-primary">{{ result.status }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if result.error.step is defined %}Echec à l'étape <code>{{ result.error.step }}</code>{% else %}-{% endif %}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-block btn-default btn-xs" data-toggle="modal" data-target="#modal{{ result.id }}">Afficher la capture</button>
+                                        <!-- Modal -->
+                                        <div id='modal{{ result.id }}' class="modal fade">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                        <h4 class="modal-title">Capture</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>
+                                                            <img src='{{ result.capture }}' alt='Pas de capture disponible pour ce résultat.' style='max-width: 100%;'>
+                                                        </p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" data-dismiss="modal">Fermer</button>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr><td colspan="6">Il n'y a aucun résultat pour ce test.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% if nbPages > 1 %}
+                    <div class="box-footer clearfix">
+                        <br>
+                        <br>
+                        <center>
+                            <ul class="pagination pagination-sm no-margin">
+                                {% if page > 1 %}
+                                    <li>
+                                        <a href="{{ path('dview_test_view', {'pid': pid, 'sid': sid, 'tid': tid, 'page': page-1}) }}">«</a>
+                                    </li>
+                                {% endif %}
+                                {% for p in range(1, nbPages) %}
+                                    <li{% if p == page %} class="active"{% endif %}>
+                                        <a href="{{ path('dview_test_view', {'pid': pid, 'sid': sid, 'tid': tid, 'page': p}) }}">{{ p }}</a>
+                                    </li>
+                                {% endfor %}
+                                {% if page < nbPages %}
+                                    <li>
+                                        <a href="{{ path('dview_test_view', {'pid': pid, 'sid': sid, 'tid': tid, 'page': page+1}) }}">»</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </center>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title">JSON</h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        <button class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body collapse">
+                    {{ res }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal hide" id="pleaseWaitDialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-header">
+            <h1>Processing...</h1>
+        </div>
+        <div class="modal-body">
+            <div class="progress progress-striped active">
+                <div class="bar" style="width: 100%;"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('vendor/lightbox2/dist/js/lightbox.js') }}"></script>
+    <script type="text/javascript">
+                            var waitingDialog = waitingDialog || (function ($) {
+                                'use strict';
+
+                                // Creating modal dialog's DOM
+                                var $dialog = $(
+                                        '<div class="modal fade" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">' +
+                                        '<div class="modal-dialog modal-m">' +
+                                        '<div class="modal-content">' +
+                                        '<div class="modal-header"><h3 style="margin:0;"></h3></div>' +
+                                        '<div class="modal-body">' +
+                                        '<div class="progress progress-striped active" style="margin-bottom:0;"><div class="progress-bar" style="width: 100%"></div></div>' +
+                                        '</div>' +
+                                        '</div></div></div>');
+
+                                return {
+                                    /**
+                                     * Opens our dialog
+                                     * @param message Custom message
+                                     * @param options Custom options:
+                                     * 				  options.dialogSize - bootstrap postfix for dialog size, e.g. "sm", "m";
+                                     * 				  options.progressType - bootstrap postfix for progress bar type, e.g. "success", "warning".
+                                     */
+                                    show: function (message, options) {
+                                        // Assigning defaults
+                                        if (typeof options === 'undefined') {
+                                            options = {};
+                                        }
+                                        if (typeof message === 'undefined') {
+                                            message = 'Chargement';
+                                        }
+                                        var settings = $.extend({
+                                            dialogSize: 'm',
+                                            progressType: '',
+                                            onHide: null // This callback runs after the dialog was hidden
+                                        }, options);
+
+                                        // Configuring dialog
+                                        $dialog.find('.modal-dialog').attr('class', 'modal-dialog').addClass('modal-' + settings.dialogSize);
+                                        $dialog.find('.progress-bar').attr('class', 'progress-bar');
+                                        if (settings.progressType) {
+                                            $dialog.find('.progress-bar').addClass('progress-bar-' + settings.progressType);
+                                        }
+                                        $dialog.find('h3').text(message);
+                                        // Adding callbacks
+                                        if (typeof settings.onHide === 'function') {
+                                            $dialog.off('hidden.bs.modal').on('hidden.bs.modal', function (e) {
+                                                settings.onHide.call($dialog);
+                                            });
+                                        }
+                                        // Opening dialog
+                                        $dialog.modal();
+                                    },
+                                    /**
+                                     * Closes dialog
+                                     */
+                                    hide: function () {
+                                        $dialog.modal('hide');
+                                    }
+                                };
+
+                            })(jQuery);
+    </script>
+    <script>
+        lightbox.option({
+            'disableScrolling': true
+        });
+    </script>
+{% endblock %}

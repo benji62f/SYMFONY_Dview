@@ -1,0 +1,27 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+    <div class="row">
+        <div class="col-lg-6 col-lg-offset-3">
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+                    <img class="profile-user-img img-responsive img-circle" src="{{ asset('vendor/bootstrap/dist/img/user.jpg') }}" alt="User profile picture">
+                    <h3 class="profile-username text-center">{{ app.user.username }}</h3>
+                    <p class="text-muted text-center">Membre depuis le {{ app.user.creationDate|date('d/m/Y') }}</p>
+
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Mon email</b> <a class="pull-right">{{ app.user.email }}</a>
+                        </li>
+                    </ul>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <a href="{{ path('fos_user_profile_edit') }}" class="btn btn-primary btn-block"><b>Editer mon compte</b></a>
+                            <br>
+                            <a href="{{ path('fos_user_change_password') }}" class="btn btn-primary btn-block"><b>Changer mon mot de passe</b></a>
+                        </div>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+{% endblock fos_user_content %}

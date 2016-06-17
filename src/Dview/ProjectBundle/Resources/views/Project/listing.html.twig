@@ -1,0 +1,62 @@
+{% extends "DviewProjectBundle::layout.html.twig" %}
+{% block dviewproject_body %}
+    
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-striped">
+                        <thead>
+                            <th>Nom</th>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <th>Gérant</th>
+                            {% endif %}
+                            {% if is_granted('ROLE_MANAGER') %}
+                                <th>Client</th>
+                            {% endif %}
+                            <th>Date de création</th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            {% for project in listProjects %}
+                                <tr>
+                                    <td><a href="{{ path('dview_suite_listing', {'pid': project.id}) }}">{{ project.name }}</a></td>
+                                    {% if is_granted('ROLE_ADMIN') %}
+                                        <td>{{ project.manager }}</td>
+                                    {% endif %}
+                                    {% if is_granted('ROLE_MANAGER') %}
+                                        <td>{{ project.client }}</td>
+                                    {% endif %}
+                                    <td>{{ project.date|date('d/m/Y') }}</td>
+                                    <td><a href="{{ path('dview_project_view', {'pid': project.id}) }}"><span class="glyphicon glyphicon-cog"></span></a></td>
+                                </tr>
+                            {% else %}
+                                {% if app.request.get('query') is null %}
+                                    <tr><td colspan="5">Vous n'avez aucun projet à ce jour.</td></tr>
+                                {% else %}
+                                    <tr><td colspan="5">Aucun résultat pour "{{ app.request.get("query") }}".</td></tr>
+                                {% endif %}
+                            {% endfor %}
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <tr><td colspan="5"><a href="{{ path('dview_project_add') }}"><b><span class="glyphicon glyphicon-plus"></span> Ajouter un projet</b></a></td></tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+
+{% if nbPages > 1 %}
+    <center>
+        <ul class="pagination">
+            {# On utilise la fonction range(a, b) qui crée un tableau de valeurs entre a et b #}
+            {% for p in range(1, nbPages) %}
+                <li{% if p == page %} class="active"{% endif %}>
+                    <a href="{{ path('dview_project_listing', {'page': p, 'query': app.request.get("query")}) }}">{{ p }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </center>
+{% endif %}
+{% endblock %}

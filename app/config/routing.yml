@@ -1,0 +1,26 @@
+dview_tool:
+    resource: "@DviewToolBundle/Resources/config/routing.yml"
+    prefix:   /
+
+dview_mail:
+    resource: "@DviewMailBundle/Resources/config/routing.yml"
+    prefix:   /
+
+dview_admin:
+    resource: "@DviewAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
+dview_dashboard:
+    resource: "@DviewDashboardBundle/Resources/config/routing.yml"
+    prefix:   /
+
+dview_project:
+    resource: "@DviewProjectBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+dview_user:
+    resource: "@DviewUserBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

@@ -1,0 +1,98 @@
+#### Project section ####
+
+dview_project_listing:
+    path:     /projects
+    defaults: { _controller: DviewProjectBundle:Project:projectListing }
+
+dview_project_view:
+    path:     /projects/{pid}
+    requirements:
+        pid: \d+
+    defaults: { _controller: DviewProjectBundle:Project:projectView }
+    
+dview_project_add:
+    path:     /projects/add
+    defaults: { _controller: DviewProjectBundle:Project:projectAdd }
+
+dview_project_delete:
+    path:     /projects/{pid}/delete
+    requirements:
+        pid: \d+
+    defaults: { _controller: DviewProjectBundle:Project:projectDelete }
+
+    
+#### Suite section ####
+    
+dview_suite_listing:
+    path:     /projects/{pid}/suites
+    requirements:
+        pid: \d+
+    defaults: { _controller: DviewProjectBundle:Project:suiteListing }
+    
+dview_suite_view:
+    path:     /projects/{pid}/suites/{sid}
+    requirements:
+        pid: \d+
+        sid: \d+
+    defaults: { _controller: DviewProjectBundle:Project:suiteView }
+    
+dview_suite_add:
+    path:   /projects/{pid}/suites/add
+    requirements:
+        pid: \d+
+    defaults: { _controller: DviewProjectBundle:Project:suiteAdd }
+    
+dview_suite_delete:
+    path:   /projects/{pid}/suites/{sid}/delete
+    requirements:
+        pid: \d+
+    defaults: { _controller: DviewProjectBundle:Project:suiteDelete }
+
+    
+#### Test section ####
+    
+dview_test_listing:
+    path:     /projects/{pid}/suites/{sid}/tests
+    requirements:
+        pid: \d+
+        sid: \d+
+    defaults: { _controller: DviewProjectBundle:Project:testListing }
+    
+dview_test_view:
+    path:     /projects/{pid}/suites/{sid}/tests/{tid}
+    requirements:
+        pid: \d+
+        sid: \d+
+        tid: \d+
+    defaults: { _controller: DviewProjectBundle:Project:testView }
+    
+dview_test_add:
+    path:   /projects/{pid}/suites/{sid}/tests/add
+    requirements:
+        pid: \d+
+        sid: \d+
+    defaults: { _controller: DviewProjectBundle:Project:testAdd }
+    
+dview_test_finalize:
+    path:   /projects/{pid}/suites/{sid}/tests/{tid}/finalize
+    requirements:
+        pid: \d+
+        sid: \d+
+        tid: \d+
+    defaults: { _controller: DviewProjectBundle:Project:testFinalize }
+    
+dview_test_delete:
+    path:   /projects/{pid}/suites/{sid}/tests/{tid}/delete
+    requirements:
+        pid: \d+
+        sid: \d+
+        tid: \d+
+    defaults: { _controller: DviewProjectBundle:Project:testDelete }
+    
+dview_test_run:
+    path:   /projects/{pid}/suites/{sid}/tests/{tid}/run
+    requirements:
+        pid: \d+
+        sid: \d+
+        tid: \d+
+    defaults: { _controller: DviewProjectBundle:Project:testRun }

@@ -1,0 +1,11 @@
+dview_mail_homepage:
+    path:     /mail
+    defaults: { _controller: DviewMailBundle:Mail:send }
+
+dview_test_mail:
+    path:   /projects/{pid}/suites/{sid}/tests/{tid}/mail
+    requirements:
+        pid: \d+
+        sid: \d+
+        tid: \d+
+    defaults: { _controller: DviewMailBundle:Mail:testEdit }

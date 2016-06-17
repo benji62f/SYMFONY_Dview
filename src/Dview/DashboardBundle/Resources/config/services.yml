@@ -1,0 +1,4 @@
+services:
+#    dview_dashboard.example:
+#        class: Dview\DashboardBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]
