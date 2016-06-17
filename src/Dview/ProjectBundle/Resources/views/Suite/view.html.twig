@@ -10,6 +10,7 @@
         <p class="box-footer">
             <a class="btn btn-primary btn-lg" href="{{ path('dview_test_listing', {'pid' : pid, 'sid' : suite.id}) }}" role="button">Voir les tests</a>
             {% if is_granted('ROLE_MANAGER') %}
+                <a class="btn btn-success btn-lg" href="{{ path('dview_suite_mail', {'pid' : pid, 'sid' : suite.id}) }}" role="button">Configurer les courriels</a>
                 <a class="btn btn-danger btn-lg" href="{{ path('dview_suite_delete', {'pid' : pid, 'sid' : suite.id}) }}" role="button">Supprimer la suite</a>
             {% endif %}
         </p>

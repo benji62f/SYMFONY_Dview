@@ -9,6 +9,9 @@
         <p class="box-body">{{ project.description }}</p>
         <p class="box-footer">
             <a class="btn btn-primary btn-lg" href="{{ path('dview_suite_listing', {'pid' : project.id }) }}" role="button">Voir les suites</a>
+            {% if is_granted('ROLE_MANAGER') %}
+                <a class="btn btn-success btn-lg" href="{{ path('dview_project_mail', {'pid' : project.id}) }}" role="button">Configurer les courriels</a>
+            {% endif %}
             {% if is_granted('ROLE_ADMIN') %}
                 <a class="btn btn-danger btn-lg" href="{{ path('dview_project_delete', {'pid' : project.id}) }}" role="button">Supprimer le projet</a>
             {% endif %}

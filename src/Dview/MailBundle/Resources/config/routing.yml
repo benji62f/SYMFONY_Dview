@@ -1,7 +1,21 @@
+# To receive results from Dview manager
 dview_mail_homepage:
     path:     /mail
     defaults: { _controller: DviewMailBundle:Mail:send }
 
+dview_project_mail:
+    path:   /projects/{pid}/mail
+    requirements:
+        pid: \d+
+    defaults: { _controller: DviewMailBundle:Mail:projectEdit }
+    
+dview_suite_mail:
+    path:   /projects/{pid}/suites/{sid}/mail
+    requirements:
+        pid: \d+
+        sid: \d+
+    defaults: { _controller: DviewMailBundle:Mail:suiteEdit }
+    
 dview_test_mail:
     path:   /projects/{pid}/suites/{sid}/tests/{tid}/mail
     requirements:

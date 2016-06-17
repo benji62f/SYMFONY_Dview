@@ -1,0 +1,58 @@
+{% extends "::base.html.twig" %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('vendor/summernote-0.8.1/dist/summernote.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/bootstrap-switch-master/dist/css/bootstrap3/bootstrap-switch.css') }}" rel="stylesheet">
+    <link href="{{ asset('vendor/chosen_v1.5.1/chosen.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Réglages des courriels</h3>
+                </div>
+                <!-- /.box-header -->
+                {% include 'DviewMailBundle::edit_content.html.twig' %}
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('vendor/bootstrap-switch-master/dist/js/bootstrap-switch.js') }}"></script>
+    <script src="{{ asset('vendor/summernote-0.8.1/dist/summernote.js') }}"></script>
+    <script src="{{ asset('vendor/chosen_v1.5.1/chosen.jquery.min.js') }}"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                callbacks: {
+                    onChange: function (contents, $editable) {
+                        console.log('onChange:', contents, $editable);
+                        document.getElementById("mail_additionalContent").value = contents;
+                    }
+                },
+                height: 300,
+                dialogsInBody: true
+            });
+        });
+
+        function insertAtCaret(text) {
+            $('#summernote').summernote('editor.saveRange');
+
+            // Editor loses selected range (e.g after blur)
+
+            $('#summernote').summernote('editor.restoreRange');
+            $('#summernote').summernote('editor.focus');
+            $('#summernote').summernote('editor.insertText', ' ' + text + ' ');
+        }
+
+        $('#mail_receivers').chosen({width: '100%'});
+        $(".checkbox").bootstrapSwitch();
+    </script>
+{% endblock %}

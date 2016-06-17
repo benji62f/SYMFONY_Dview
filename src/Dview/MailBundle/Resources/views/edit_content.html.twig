@@ -1,0 +1,137 @@
+<div class="box-body">
+    {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+    {{ form_errors(form) }}
+    <div class="form-group">
+        <table class="col-xs-12" style="border-collapse: separate; border-spacing: 15px;">
+            <tr>
+                <td colspan="2">
+                    {{ form_label(form.receivers, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+                    <div class="col-sm-10">
+                        {{ form_widget(form.receivers, {'attr': {'class': 'form-control'}}) }}
+                        <span class="help-block">{{ form_errors(form.receivers) }}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-xs-6">
+                    {{ form_label(form.onOk, null, {'label_attr': {'class': 'col-sm-4 control-label', 'style': 'color: green'}}) }}
+                    <div class="col-sm-8">
+                        {{ form_widget(form.onOk, {'attr': {'class': 'checkbox'}}) }}
+                        <span class="help-block">{{ form_errors(form.onOk) }}</span>
+                    </div>
+                </td>
+                <td class="col-xs-6">
+                    {{ form_label(form.withStatus, null, {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                    <div class="col-sm-8">
+                        {{ form_widget(form.withStatus, {'attr': {'class': 'checkbox'}}) }}
+                        <span class="help-block">{{ form_errors(form.withStatus) }}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-xs-6">
+                    {{ form_label(form.onKo, null, {'label_attr': {'class': 'col-sm-4 control-label', 'style': 'color: red'}}) }}
+                    <div class="col-sm-8">
+                        {{ form_widget(form.onKo, {'attr': {'class': 'checkbox'}}) }}
+                        <span class="help-block">{{ form_errors(form.onKo) }}</span>
+                    </div>
+                </td>
+                <td class="col-xs-6">
+                    {{ form_label(form.withInfo, null, {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                    <div class="col-sm-8">
+                        {{ form_widget(form.withInfo, {'attr': {'class': 'checkbox'}}) }}
+                        <span class="help-block">{{ form_errors(form.withInfo) }}</span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-xs-6">
+                    {{ form_label(form.withCapture, null, {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                    <div class="col-sm-8">
+                        {{ form_widget(form.withCapture, {'attr': {'class': 'checkbox'}}) }}
+                        <span class="help-block">{{ form_errors(form.withCapture) }}</span>
+                    </div>
+                </td>
+                <td class="col-xs-6">
+                    {{ form_label(form.withAdditionalContent, null, {'label_attr': {'class': 'col-sm-4 control-label'}}) }}
+                    <div class="col-sm-8">
+                        {{ form_widget(form.withAdditionalContent, {'attr': {'class': 'checkbox'}}) }}
+                        <span class="help-block">{{ form_errors(form.withAdditionalContent) }}</span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="alert alert-info">
+        <div class="form-group">
+            {{ form_label(form.customObject, null, {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+            <div class="col-sm-10">
+                {{ form_widget(form.customObject, {'attr': {'class': 'form-control', 'placeholder': 'Not required'}}) }}
+                <span class="help-block">{{ form_errors(form.customObject) }}</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Additional content</label>
+            <div class="col-sm-10">
+                <div id="summernote">{{ content|raw }}</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Insert variables</label>
+            <div class="col-sm-10">
+                <table style="border-collapse: separate; border-spacing: 5px;">
+                    <tr>
+                        <td style="text-align: right;">
+                            <span class="label label-warning">Result</span>&emsp;
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default" onclick="insertAtCaret('$status');"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Result status</button>
+                                <button type="button" class="btn btn-default" onclick="insertAtCaret('$step');"><span class="glyphicon glyphicon-indent-right" aria-hidden="true"></span> Error at step</button>
+                                <button type="button" class="btn btn-default" onclick="insertAtCaret('$percentage');"><span class="glyphicon glyphicon-screenshot" aria-hidden="true"></span> Percentage</button>
+                                <button type="button" class="btn btn-default" onclick="insertAtCaret('$date');"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span> Test date</button>
+                                <button type="button" class="btn btn-default" onclick="insertAtCaret('$time');"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span> Run time</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;">
+                            <span class="label label-warning">Configuration</span>&emsp;
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default" onclick="insertAtCaret('$browser');"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span> Browser name</button>
+                                <button type="button" class="btn btn-default" onclick="insertAtCaret('$version');"><span class="fa fa-code-fork" aria-hidden="true"></span> Browser version</button>
+                                <button type="button" class="btn btn-default" onclick="insertAtCaret('$os');"><span class="fa fa-windows" aria-hidden="true"></span> Operating System</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: right;">
+                            <span class="label label-warning">Labels</span>&emsp;
+                        </td>
+                        <td>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default" onclick="insertAtCaret('$project');"><span class="fa fa-folder" aria-hidden="true"></span> Project name</button>
+                                <button type="button" class="btn btn-default" onclick="insertAtCaret('$suite');"><span class="fa fa-list-alt" aria-hidden="true"></span> Suite name</button>
+                                <button type="button" class="btn btn-default" onclick="insertAtCaret('$name');"><span class="glyphicon glyphicon-font" aria-hidden="true"></span> Test name</button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="box-footer">
+        {% if tid is defined %}
+            <a href="{{ path('dview_test_view', {'pid' : pid, 'sid' : sid, 'tid' : tid}) }}" class="btn btn-default">Retour</a>
+        {% elseif sid is defined %}
+            <a href="{{ path('dview_suite_view', {'pid' : pid, 'sid' : sid}) }}" class="btn btn-default">Retour</a>
+        {% elseif pid is defined %}
+            <a href="{{ path('dview_project_view', {'pid' : pid}) }}" class="btn btn-default">Retour</a>
+        {% endif %}
+        {{ form_widget(form.save, {'attr': {'class': 'btn btn-info pull-right'}}) }}
+    </div>
+    {{ form_rest(form) }}
+    {{ form_end(form) }}
+</div>

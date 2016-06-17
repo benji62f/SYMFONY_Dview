@@ -79,10 +79,6 @@ class MailConfig {
 
     /**
      * @ORM\ManyToMany(targetEntity="Dview\UserBundle\Entity\User")
-     * @ORM\JoinTable(name="receivers",
-     *      joinColumns={@ORM\JoinColumn(name="mail_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id", unique=true)}
-     *      )
      */
     private $receivers;
 

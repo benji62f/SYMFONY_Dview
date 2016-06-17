@@ -264,6 +264,7 @@ class ProjectController extends Controller {
             $test->setIdOnMongoDB(json_decode($res->getBody())->{'id'});
 
             $test->setMailConfigExt($project->getMailConfig());
+            $test->setMailConfig(new MailConfig());
 
             $em->persist($test);
             $em->flush();
