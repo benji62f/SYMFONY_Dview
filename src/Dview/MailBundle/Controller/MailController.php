@@ -13,7 +13,7 @@ class MailController extends Controller {
     public function sendAction() {
         $content = $this->get('request')->getContent();
         if (!empty($content)) {
-            $params = json_decode($content); // 2nd param to get as array
+            $params = json_decode($content);
             $params->initDate = intval($params->initDate / 1000);
         } else {
             throw new HttpException(422, 'Missing arguments');
@@ -81,9 +81,12 @@ class MailController extends Controller {
              */
             foreach ($config->getReceivers() as $receiver) {
                 $message->setTo($receiver->getEmail());
-                $this->get('mailer')->send($message);
+                $result = $this->get('mailer')->send($message);
+                if($result == 0){
+                    throw new HttpException(500, 'Sending error');
+                }
             }
-        } else {
+        } else { 
             throw new HttpException(204, 'Mail not desired'); // if the mail service is disabled by the client (in test's settings)
         }
 
