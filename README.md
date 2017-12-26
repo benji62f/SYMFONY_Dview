@@ -11,4 +11,4 @@ This project was developed as part of the Bachelor internship.
 ### Main page
 ![dview-1](https://user-images.githubusercontent.com/10500345/34343066-d4afe5ae-e9c3-11e7-84e2-7cbfdeb405cb.png)
 ### Test page
-![dview-2](https://user-images.githubusercontent.com/10500345/34343127-ad7c8716-e9c4-11e7-8ca3-1d6ba60769a3.png)
+![dview-3](https://user-images.githubusercontent.com/10500345/34355003-a599a952-ea32-11e7-9b00-733279bd2d12.png)
